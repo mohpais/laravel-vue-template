@@ -1,0 +1,85 @@
+
+
+.my-btn:hover span {
+    margin-right: .6rem !important;
+}
+
+/* .my-input for desktop */
+.my-input {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 5px;
+    /* padding-left: 0%; */
+    padding: 6px 12px;
+    font-size: 12px !important;
+    line-height: 1.85 !important;
+}
+
+.my-input::placeholder {
+    font-size: 12px; /* Set the font size for the placeholder */
+}
+
+.my-input:focus {
+    box-shadow: none !important;
+    border-bottom: 1px solid #ced4da;
+}
+
+.my-input::-webkit-input-placeholder {
+    color: #aaabb3 !important;
+}
+
+.my-input:-moz-placeholder {
+    color: #aaabb3 !important;
+}
+
+.my-input::-moz-placeholder {
+    color: #aaabb3 !important;
+}
+
+.my-input::placeholder {
+    color: #aaabb3 !important;
+}
+
+.my-input:-ms-input-placeholder {
+    color: #aaabb3 !important;
+}
+
+/* .my-input for mobile */
+.my-input-m {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0%;
+    padding-left: 0%;
+    background: transparent !important;
+    color: white;
+    font-family: MuliBold;
+}
+
+.my-input-m:focus {
+    box-shadow: none !important;
+    border-bottom: 1px solid #ced4da;
+    color: white !important;
+    font-family: MuliBold;
+}
+
+.my-input-m::-webkit-input-placeholder {
+    color: #e0e0e0 !important;
+}
+
+.my-input-m:-moz-placeholder {
+    color: #e0e0e0 !important;
+}
+
+.my-input-m::-moz-placeholder {
+    color: #e0e0e0 !important;
+}
+
+.my-input-m::placeholder {
+    color: #e0e0e0 !important;
+}
+
+.my-input-m:-ms-input-placeholder {
+    color: #e0e0e0 !important;
+}
