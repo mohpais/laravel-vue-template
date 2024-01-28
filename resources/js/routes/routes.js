@@ -8,7 +8,6 @@ async function requireLogin(to, from, next) {
     let authenticated, roles;
     roles = authStore.roleUser;
     authenticated = !!authStore.authenticated;
-    // console.log(authenticated);
     if (authenticated) {
         if (to.meta.roles && !helpers.isSubArray(to.meta.roles, roles)) {
             next('/forbidden');
@@ -27,7 +26,6 @@ async function isLogin(to, from, next) {
     authenticated = !!authStore.authenticated;
     roles = authStore.roleUser;
     if (authenticated) {
-        console.log(roles);
         if (helpers.isSubArray(['Super Admin', 'Admin Base', 'Admin Content'], roles)) {
             next({ name: "Dashboard" });
         } else {
@@ -55,16 +53,6 @@ export default [
                 path: "/",
                 name: "Home",
                 component: () => import('@/views/Home.vue'),
-            },
-            {
-                path: "/categories",
-                name: "Category",
-                component: () => import('@/views/Category.vue'),
-            },
-            {
-                path: "/detail/:slug",
-                name: "Detail",
-                component: () => import('@/views/Detail.vue'),
             },
             {
                 path: "/premium",
@@ -176,19 +164,6 @@ export default [
                             ],
                         },
                     },
-                    // {
-                    //     path: "/panel/users/add",
-                    //     name: "UserAdd",
-                    //     component: () => import('@/views/_panels/UserAdd.vue'),
-                    //     meta: {
-                    //         title: "User Add",
-                    //         breadcrumbs: [
-                    //             { name: `Home`, link: `` },
-                    //             { name: "User", link: "" },
-                    //             { name: "Add", link: "/panel/users/add" },
-                    //         ],
-                    //     },
-                    // }
                 ]
             },
             {

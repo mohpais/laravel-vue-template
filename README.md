@@ -11,9 +11,7 @@
 
 # About this app
 
-The Hidayah App is a comprehensive and user-friendly platform designed to assist Muslims in their daily spiritual routines and enhance their connection with Islam. 
-
-This application offers many features that aim to enrich a Muslim's spiritual journey, such as:
+Type description
 
 ## Technology Stack:
 - <b>Backend Service API:</b> Developed using **[Laravel](https://laravel.com/)**
@@ -27,24 +25,28 @@ This application offers many features that aim to enrich a Muslim's spiritual jo
 ```
 git clone https://github.com/mohpais/hidayah-website
 ```
-2. Copy .env.example using command 
+2. Open folder using command 
 ```
-cp .env.exampe .env
+cd laravel-vue-template
 ```
 3. Install package for laravel 
 ```
 composer install
 composer dump-autoload
 ```
-4. Generate new key
+4. Copy .env.example using command 
+```
+copy .env.example .env
+```
+5. Generate new key
 ```
 php artisan key:generate
 ```
-5. Install package for frontend [Vue.Js](https://vuejs.org/) 
+6. Install package for frontend [Vue.Js](https://vuejs.org/) 
 ```
 npm install
 ```
-6. Connect Database by updating .env like this:
+7. Connect Database by updating .env like this:
 ```
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -53,15 +55,16 @@ DB_DATABASE=YOUR_DB_NAME
 DB_USERNAME=YOUR_DB_USERNAME
 DB_PASSWORD=YOUR_DB_PASSWORD
 ```
-7. Migrate the database using this command:
+8. Migrate the database using this command:
 ```
 php artisan migrate
 ```
-8. Then generate JWT secret key like:
+9. Then generate JWT secret key like:
 ```
 php artisan jwt:secret
 ```
-9. Running 
+10. Running laravel and vue with seperate 2 terminal 
 ```
 php artisan serve
+npm run dev
 ```
