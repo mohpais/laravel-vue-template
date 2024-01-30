@@ -61,10 +61,10 @@
                             </div>
                         </MyFormProvider>
                     </div>
+                    <div class="m-sm-3 animated fadeInRight">
+                        Already have account? <router-link to="/account/sign-in">Log In</router-link>
+                    </div>
                 </div>
-            </div>
-            <div class="text-center mb-3">
-                Already have account? <router-link to="/account/sign-in">Log In</router-link>
             </div>
         </div>
     </div>

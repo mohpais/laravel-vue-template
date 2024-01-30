@@ -61,8 +61,8 @@
                 <div class="card-body">
                     <div class="m-sm-3">
                         <div class="d-grid gap-2 mb-3">
-                            <a class="btn btn-google btn-lg" href="/"><i class="bi bi-google"></i> Sign in with Google</a>
-                            <a class="btn btn-facebook btn-lg" href="/"><i class="bi bi-facebook"></i> Sign in with Facebook</a>
+                            <a class="btn btn-google btn-lg animated fadeInUp delay-1" href="/"><i class="bi bi-google"></i> Sign in with Google</a>
+                            <a class="btn btn-facebook btn-lg animated fadeInUp delay-1" href="/"><i class="bi bi-facebook"></i> Sign in with Facebook</a>
                         </div>
                         <div class="row">
                             <div class="col">
@@ -74,7 +74,7 @@
                             </div>
                         </div>
                         <MyFormProvider id="sign-in-form" :formData="signin" @onSubmit="onSubmit">
-                            <div class="mb-2">
+                            <div class="mb-2 animated fadeInUp delay-1">
                                 <FormControl
                                     id="email"
                                     placeholder="Enter your email ..."
@@ -83,7 +83,7 @@
                                     :showRequired="false"
                                 />
                             </div>
-                            <div class="mb-2">
+                            <div class="mb-2 animated fadeInUp delay-1">
                                 <FormControl
                                     id="password"
                                     type="password"
@@ -92,6 +92,9 @@
                                     :required="true"
                                     :showRequired="false"
                                 />
+                                <small>
+                                    <a href="/pages-reset-password">Forgot password?</a>
+                                </small>
                             </div>
                             <div>
                                 <div class="form-check align-items-center">
@@ -111,11 +114,16 @@
                             </div>
                         </MyFormProvider>
                     </div>
+                    <div class="m-sm-3 animated fadeInRight">
+                        <div class="">
+                            Don't have an account? <router-link to="/account/sign-up">Sign up</router-link>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="text-center mb-3">
+            <!-- <div class="text-center mb-3">
                 Don't have an account? <router-link to="/account/sign-up">Sign up</router-link>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -144,30 +152,29 @@
 
     /** Define method */
     const onSubmit = async (isValid) => {
-        // debugger;
-        isLoading.value = true;
         if (isValid) {
+            isLoading.value = true;
             try {
                 let res = await DoLogin(signin);
-                // var { success, data } = res.data;
-                console.log(res.data);
-                // if (success) {
-                //     var btnElement = btnSignIn.value;
-                //     btnElement.setAttribute('disabled', 'true');
-                //     // btnElement.innerHTML = errors.value[fieldName];
-                //     var authorization = data.token;
-                //     var user = data.user;
-                //     var role = data.role;
-                //     sessionStorage.setItem("_xa", authorization);
-                //     sessionStorage.setItem("_us", helpers.enc(JSON.stringify(user), 1, 6));
-                //     sessionStorage.setItem("_rl", helpers.enc(JSON.stringify(role), 1, 6));
-                //     // window.location.reload();
-                // }
+                if (res.data.success) {
+                    let data = res.data;
+                    var btnElement = btnSignIn.value;
+                    btnElement.setAttribute('disabled', 'true');
+                    var authorization = data.token;
+                    var user = data.user;
+                    var role = data.role;
+                    sessionStorage.setItem("_xa", authorization);
+                    sessionStorage.setItem("_us", helpers.enc(JSON.stringify(user), 1, 6));
+                    sessionStorage.setItem("_rl", helpers.enc(JSON.stringify(role), 1, 6));
+                    window.location.reload();
+                } else {
+                    helpers.alertToast("error", res.data.message);
+                }
             } catch (error) {
                 console.error(error);
                 helpers.alertToast("error", "Something wrong when login!");
             } finally {
-                isLoading.value = true;
+                isLoading.value = false;
             }
         }
     }

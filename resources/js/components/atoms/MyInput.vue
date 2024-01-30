@@ -31,30 +31,6 @@
       :disabled="props.disabled"
       :required="props.required"
     />
-    <!-- <div class="input-group">
-        <flat-pickr
-          v-bind="$attrs"
-          :id="props.id"
-          :name="props.name"
-          v-model="modelValue"
-          :config="config"
-          @input="updateInput"
-          :class="addClass"
-          :placeholder="props.placeholder"
-          :disabled="props.disabled"
-          :required="props.required"
-        />
-        <div class="input-group-append">
-            <button class="btn btn-default" type="button" title="Toggle" data-toggle>
-                <i class="bi bi-calendar"/>
-                <span aria-hidden="true" class="sr-only">Toggle</span>
-            </button>
-            <button class="btn btn-default" type="button" title="Clear" data-clear>
-                <i class="bi bi-alarm"/>
-                <span aria-hidden="true" class="sr-only">Clear</span>
-            </button>
-        </div>
-    </div> -->
   </div>
   <div v-else :class="{
     'position-relative': type === 'password'
@@ -135,6 +111,10 @@
         type: String,
         default: "",
       },
+      rules: {
+        type: Array,
+        default: []
+      }
     });
     
     const config = ref({
