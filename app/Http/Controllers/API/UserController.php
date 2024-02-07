@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\DataTableService;
+use App\Services\DataTableLonsumService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
@@ -12,9 +12,9 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function __construct(private DataTableService $dataTableService)
+    public function __construct(private DataTableLonsumService $dataTableService)
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api', ['except' => ['list']]);
     }
     
     /**
@@ -26,10 +26,7 @@ class UserController extends Controller
         $currentUser = Auth::user();
         
         // Build the query excluding the current user
-        $users = User::where('id', '!=', $currentUser->id)
-                    ->select('id', 'fullname', 'username', 'email', 'phone', 'gender', 'birthday', 'address', 'photo_profile as photo', 'created_at as registered_at', 'roles.name as direct_role_name')
-                    ->with('roles')
-                    ->get();
+        $users = User::where('id', '!=', $currentUser->id);
         foreach ($users as $user) {
             $user->age = isset($user->birthday) ? calculateAge($user->birthday) : null;
         }
@@ -42,16 +39,46 @@ class UserController extends Controller
      */
     public function list(Request $request)
     {
-        // Get the ID of the currently authenticated user
-        $currentUser = Auth::user();
+        try {
+            // Get the ID of the currently authenticated user
+            $currentUser = Auth::user();
 
-        // Build the query excluding the current user
-        $query = User::where('email', '<>', $currentUser->email)
-            ->with('roles');
-        // Use the DataTableService or any other logic as needed
-        $response = $this->dataTableService->getJsonResponse($query, $request);
-        
-        return response()->json($response, 200);
+            // Build the query excluding the current user
+            // $query = User::query();
+            $query = <<<EOD
+                SELECT 
+                    u.id,
+                    u.fullname,
+                    u.email,
+                    GROUP_CONCAT(rl.name ORDER BY rl.name SEPARATOR ', ') AS user_roles
+                FROM 
+                    `users` u
+                JOIN
+                    `user_roles` ur
+                    ON
+                        ur.user_id = u.id
+                JOIN
+                    `roles` rl
+                    ON
+                        rl.id = ur.role_id
+                GROUP BY
+                    u.id
+            EOD;
+
+            // Bind parameters
+            // $bindings = [
+            //     'user_id' => $currentUser->id,
+            // ];
+
+            // // Use the DataTableService or any other logic as needed
+            // $response = $this->dataTableService->getJsonResponse($request, $query, $bindings);
+            
+            // return response()->json($response, 200);
+            $response = DataTableLonsumService::query($query);
+            return response()->json($response, 200);
+        } catch (Throwable $th) {
+            return response()->json($th, 400);
+        }
     }
 
     /**
